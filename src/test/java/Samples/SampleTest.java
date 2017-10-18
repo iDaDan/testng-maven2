@@ -5,6 +5,9 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +17,7 @@ import java.util.List;
 
 public class SampleTest {
 
+    ChromeDriver driver = new ChromeDriver();
 
    /* @Test
     public void OpenGithub () {
@@ -23,20 +27,24 @@ public class SampleTest {
         driver.manage().window().maximize();
         driver.get("https://github.com/");
     }*/
+    @BeforeMethod
+    public void start(){
+        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+        driver.get("https://github.com/");
+        driver.manage().window().maximize();
+    }
 
     @Test
     public void SearchGithubForm () {
-
-        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-        ChromeDriver driver = new ChromeDriver();
-        driver.get("https://github.com/");
-        driver.manage().window().maximize();
       driver.findElement(By.xpath("//form/button[@type=\"submit\"]")).isDisplayed();
-      driver.findElement(By.xpath("//*[@id=\"user[login]\"]")).isDisplayed();
+      driver.findElement(By.xpath("//input[@id=\"user[login]\"]")).isDisplayed();
       driver.findElement(By.xpath("//*[@id=\"user[email]\"]")).isDisplayed();
       driver.findElement(By.xpath("//*[@id=\"user[password]\"]")).isDisplayed();
-      driver.findElement(By.xpath("/html/body/div[1]/header/div/div[2]/div/div/div/form/label/input[1]")).isDisplayed();
-      driver.findElement(By.xpath("/html/body/div[1]/header/div/div[2]/nav/ul/li[1]/a")).isDisplayed();
+/*
+      driver.findElement(By.xpath("//*button[@class =\"btn btn-primary btn-large f4 btn-block\"]")).isDisplayed();
+*/
+      driver.findElement(By.xpath("//button[@data-ga-click = \"Signup, Attempt, location:teams;\"]")).isDisplayed();
+      driver.findElement(By.linkText("Features")).isDisplayed();
       driver.findElement(By.xpath("/html/body/div[1]/header/div/div[2]/nav/ul/li[2]/a")).isDisplayed();
       driver.findElement(By.xpath("/html/body/div[1]/header/div/div[2]/nav/ul/li[3]/a")).isDisplayed();
       driver.findElement(By.xpath("/html/body/div[1]/header/div/div[2]/nav/ul/li[4]/a")).isDisplayed();
@@ -46,7 +54,6 @@ public class SampleTest {
 
     @Test
     public void SearchOnGitHub () {
-
 
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         ChromeDriver driver = new ChromeDriver();
@@ -71,6 +78,10 @@ public class SampleTest {
 
     }
 
+    @AfterMethod
+    public void end(){
+        driver.close();
+    }
 /*    @Test
     public void SearchOnBazarpnz () {
 
